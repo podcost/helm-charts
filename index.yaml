@@ -1,3 +1,14 @@
 apiVersion: v1
-entries: {}
-generated: "2025-01-18T00:00:00Z"
+entries:
+  agent:
+  - apiVersion: v2
+    appVersion: "2.0"
+    created: "2026-01-19T15:23:45.316817782Z"
+    description: PodCost Kubernetes metrics collection agent
+    digest: 0d8f66423f499763c9c399b1c8c678a02b9aaa1beb7f76c3f46c75fa3c988f7a
+    name: agent
+    type: application
+    urls:
+    - https://github.com/podcost/helm-charts/releases/download/agent-2.0.0/agent-2.0.0.tgz
+    version: 2.0.0
+generated: "2026-01-19T15:23:45.31682753Z"
