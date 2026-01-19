@@ -1,0 +1,6 @@
+apiVersion: v2
+name: agent
+description: PodCost Kubernetes metrics collection agent
+type: application
+version: 2.0.0
+appVersion: "2.0"

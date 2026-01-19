@@ -3,14 +3,14 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "pod-cost.name" -}}
+{{- define "agent.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "pod-cost.fullname" -}}
+{{- define "agent.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ Create a default fully qualified app name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "pod-cost.chart" -}}
+{{- define "agent.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "pod-cost.labels" -}}
-helm.sh/chart: {{ include "pod-cost.chart" . }}
-{{ include "pod-cost.selectorLabels" . }}
+{{- define "agent.labels" -}}
+helm.sh/chart: {{ include "agent.chart" . }}
+{{ include "agent.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,7 +45,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "pod-cost.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "pod-cost.name" . }}
+{{- define "agent.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "agent.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

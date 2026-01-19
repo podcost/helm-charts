@@ -25,7 +25,7 @@ helm repo update
 ### Install PodCost Agent
 
 ```bash
-helm install podcost-agent podcost/pod-cost \
+helm install podcost-agent podcost/agent \
   --set config.apiKey="YOUR_API_KEY" \
   --set config.clusterName="my-cluster" \
   --set config.cloudProvider="aws-eks" \
@@ -41,7 +41,7 @@ Get your API key from the [PodCost Dashboard](https://podcost.io/add-cluster).
 If you have GPU nodes and want to collect GPU metrics:
 
 ```bash
-helm install podcost-agent podcost/pod-cost \
+helm install podcost-agent podcost/agent \
   --set config.apiKey="YOUR_API_KEY" \
   --set config.clusterName="my-cluster" \
   --set config.cloudProvider="aws-eks" \
@@ -73,7 +73,7 @@ helm install podcost-agent podcost/pod-cost \
 | `resources.limits.memory` | Memory limit | `"256Mi"` |
 | `resources.limits.cpu` | CPU limit | `"200m"` |
 | `serviceAccount.create` | Create service account | `true` |
-| `serviceAccount.name` | Service account name | `"pod-cost"` |
+| `serviceAccount.name` | Service account name | `"podcost-agent"` |
 
 ## Cloud Provider Values
 
@@ -107,7 +107,7 @@ The agent requires the following Kubernetes permissions:
 
 ```bash
 helm repo update
-helm upgrade podcost-agent podcost/pod-cost --namespace podcost
+helm upgrade podcost-agent podcost/agent --namespace podcost
 ```
 
 ## Uninstall
@@ -122,7 +122,7 @@ kubectl delete namespace podcost
 ### Check agent logs
 
 ```bash
-kubectl logs -l app.kubernetes.io/name=pod-cost -n podcost
+kubectl logs -l app.kubernetes.io/name=agent -n podcost
 ```
 
 ### Verify metrics server is running
@@ -134,7 +134,7 @@ kubectl get pods -n kube-system | grep metrics-server
 ### Check RBAC permissions
 
 ```bash
-kubectl auth can-i list pods --as=system:serviceaccount:podcost:pod-cost
+kubectl auth can-i list pods --as=system:serviceaccount:podcost:podcost-agent
 ```
 
 ## Support

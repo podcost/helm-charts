@@ -2,9 +2,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "pod-cost.fullname" . }}-role
+  name: {{ include "agent.fullname" . }}-role
   labels:
-    {{- include "pod-cost.labels" . | nindent 4 }}
+    {{- include "agent.labels" . | nindent 4 }}
 rules:
   # Core API resources
   - apiGroups: [""]
