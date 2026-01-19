@@ -1,0 +1,30 @@
+---
+replicaCount: 1
+
+image:
+  repository: mgabribrahim/podcost-agent
+  tag: "latest"
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+  name: pod-cost
+
+config:
+  apiEndpoint: "https://ingest.podcost.io/v1"
+  collectionInterval: 60  # seconds
+  clusterName: ""  # Will be set from kubectl context or provided by user
+  apiKey: ""  # Required - get from podcost.io dashboard
+  region: "us-east-1"  # AWS region for pricing (e.g., us-east-1, eu-west-1)
+  cloudProvider: "aws-eks"  # Cloud provider: aws-eks, gcp-gke, azure-aks
+  # GPU metrics configuration
+  enableGpuMetrics: true  # Enable GPU metrics collection (requires nvidia.com/gpu resources)
+  dcgmEndpoint: ""  # DCGM Exporter endpoint (e.g., http://dcgm-exporter:9400/metrics)
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"

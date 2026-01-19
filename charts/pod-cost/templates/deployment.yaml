@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pod-cost.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "pod-cost.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "pod-cost.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "pod-cost.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: agent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: API_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: API_ENDPOINT
+            - name: COLLECTION_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: COLLECTION_INTERVAL
+            - name: CLUSTER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: CLUSTER_NAME
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-secret
+                  key: API_KEY
+            - name: REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: REGION
+            - name: CLOUD_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: CLOUD_PROVIDER
+            - name: CHART_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: CHART_VERSION
+            - name: ENABLE_GPU_METRICS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: ENABLE_GPU_METRICS
+            - name: DCGM_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "pod-cost.fullname" . }}-config
+                  key: DCGM_ENDPOINT
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
