@@ -18,7 +18,7 @@ PodCost is a Kubernetes cost monitoring solution that helps you track and optimi
 ### Add the Helm Repository
 
 ```bash
-helm repo add podcost https://podcost.github.io/helm-charts
+helm repo add podcost https://helm.podcost.io
 helm repo update
 ```
 
